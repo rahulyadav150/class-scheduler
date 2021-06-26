@@ -4,17 +4,15 @@ import { useDispatch } from 'react-redux';
 import { getTeachers } from './redux/actions/teacherAction';
 import Monthly from './components/Monthly'
 import Notify from './components/notify/Notify'
-import {getMonthName}
+import Home from './components/Home'
 
 function App() {
-  const history = useHistory()
-  const dispatch = useDispatch()
-  useEffect(()=>{
+  
+   
+     const dispatch = useDispatch()
+      useEffect(()=>{
     dispatch(getTeachers())
-    const date = new Date()
-    const monthNumber = date.getMonth()
-    const month = getMonthName(monthNumber)
-    history.push(`/month`)
+    
 
   },[dispatch])
   return <>
@@ -22,7 +20,9 @@ function App() {
     <Notify />
       <div className = 'container'>
       <Switch>
+      
         <Route exact path='/:month' component={Monthly} />
+        <Route exact path = '/' component={Home} />
       </Switch>
       </div>
     </Router>
