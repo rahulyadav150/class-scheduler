@@ -16,7 +16,7 @@ export const classTypes = {
 
 export const getClasses = (month, daysArr) => async dispatch => {
     try {
-        const res = await getDataAPI(`classes/${month}`)
+        const res = await getDataAPI(`classes?month=${month}`)
 
         dispatch({ type: classTypes.getClasses, payload: res.data.classes })
     } catch (err) {
@@ -28,7 +28,7 @@ export const getClasses = (month, daysArr) => async dispatch => {
 
 export const createClass = ({ inputData }) => async dispatch => {
     try {
-        const res = await postDataAPI(`classes/${inputData.month}`, inputData)
+        const res = await postDataAPI(`classes`, inputData)
         dispatch({ type: classTypes.createClass, payload: res.data.class })
     } catch (err) {
 
@@ -42,7 +42,7 @@ export const getClassesByTeacher = (month, teacherId, daysInMonth) => async disp
         for (let i = 0; i < daysInMonth; i++)
             Arr.push([])
         dispatch({ type: classTypes.initialize, payload: Arr })
-        const res = await getDataAPI(`classes/${month}/${teacherId}`)
+        const res = await getDataAPI(`classes/teacher?month=${month}&&teacherId=${teacherId}`)
         dispatch({ type: classTypes.getClasses, payload: res.data.classes })
     } catch (err) {
 
@@ -53,7 +53,7 @@ export const getClassesByTeacher = (month, teacherId, daysInMonth) => async disp
 export const updateClass = ({ inputData }) => async dispatch => {
     try {
         
-        const res = patchDataAPI(`classes/${inputData.classId}`, inputData)
+        const res = patchDataAPI(`classes`, inputData)
         window.location.href = `/${inputData.month}`
     } catch (err) {
         window.location.href = `/${inputData.month}`
@@ -64,7 +64,7 @@ export const updateClass = ({ inputData }) => async dispatch => {
 
 export const deleteClass = ({ day, id }) => async dispatch => {
     try {
-        const res = deleteDataAPI(`classes/${id}`)
+        const res = deleteDataAPI(`classes?classId='${id}`)
 
         dispatch({ type: classTypes.deleteClass, payload: { day: day, id: id } })
     } catch (err) {

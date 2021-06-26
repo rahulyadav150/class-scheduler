@@ -38,7 +38,7 @@ const classCtrl = {
         getClasses: async (req, res) => {
 
             try {
-                const month = req.params.month
+                const {month} = req.query
 
                 db.query(`SELECT * FROM classes WHERE month ='${month}'`, (err, rows, field) => {
                     if (err)
@@ -110,6 +110,7 @@ const classCtrl = {
         },
         updateClass: async (req, res) => {
             try{
+            
             let newClass = req.body
             
             const check =  validation(newClass)
@@ -159,7 +160,7 @@ const classCtrl = {
     deleteClass: async (req, res) => {
             try {
 
-                const id = req.params.classId
+                const {id} = req.query
                 db.query(`delete from classes where classId = ${id}`, (err, rows, field) => {
                     if (err)
                         return res.status(400).send({
@@ -183,7 +184,8 @@ const classCtrl = {
                 const {
                     month,
                     teacherId
-                } = req.params
+                } = req.query
+                console.log(month,teacherId)
 
                 db.query(`SELECT * FROM classes WHERE month ='${month}' and teacherId = ${teacherId}`, (err, rows, field) => {
                     if (err)

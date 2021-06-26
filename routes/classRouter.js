@@ -1,16 +1,16 @@
 const router=require('express').Router();
 const classCtrl=require('../controllers/classCtrl');
 
-router.get('/classes/:month',classCtrl.getClasses)
+router.get('/classes',classCtrl.getClasses)
 
-router.post('/classes/:month',classCtrl.createClass)
+router.post('/classes',classCtrl.createClass)
 
-router.patch('/classes/:classId',classCtrl.updateClass)
+router.patch('/classes',classCtrl.updateClass)
 
 
-router.delete('/classes/:classId',classCtrl.deleteClass)
+router.delete('/classes',classCtrl.deleteClass)
 
-router.get('/classes/:month/:teacherId',classCtrl.getClassesByTeacher)
+router.get('/classes/teacher',classCtrl.getClassesByTeacher)
 
 // router.post('/login',authCtrl.login)
 
