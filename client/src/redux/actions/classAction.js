@@ -17,12 +17,9 @@ export const classTypes = {
 export const getClasses = (month, daysArr) => async dispatch => {
     try {
         const res = await getDataAPI(`classes?month=${month}`)
-
         dispatch({ type: classTypes.getClasses, payload: res.data.classes })
     } catch (err) {
-
         dispatch({ type: 'ALERT', payload: { err: err.response.data.msg } })
-
     }
 }
 
@@ -31,7 +28,6 @@ export const createClass = ({ inputData }) => async dispatch => {
         const res = await postDataAPI(`classes`, inputData)
         dispatch({ type: classTypes.createClass, payload: res.data.class })
     } catch (err) {
-
         dispatch({ type: 'ALERT', payload: { err: err.response.data.msg } })
     }
 }
@@ -45,30 +41,25 @@ export const getClassesByTeacher = (month, teacherId, daysInMonth) => async disp
         const res = await getDataAPI(`classes/teacher?month=${month}&&teacherId=${teacherId}`)
         dispatch({ type: classTypes.getClasses, payload: res.data.classes })
     } catch (err) {
-
         dispatch({ type: 'ALERT', payload: { err: err.response.data.msg } })
     }
 }
 
 export const updateClass = ({ inputData }) => async dispatch => {
     try {
-        
-        const res = patchDataAPI(`classes`, inputData)
-        window.location.href = `/${inputData.month}`
+        const res =await  patchDataAPI(`classes`, inputData)
+        dispatch({type:classTypes.updateClass,payload:inputData})
     } catch (err) {
-        window.location.href = `/${inputData.month}`
+        dispatch({ type: 'ALERT', payload: { err: err.response.data.msg } })
         
-
     }
 }
 
 export const deleteClass = ({ day, id }) => async dispatch => {
     try {
-        const res = deleteDataAPI(`classes?classId=${id}`)
-
+        const res = await deleteDataAPI(`classes?classId=${id}`)
         dispatch({ type: classTypes.deleteClass, payload: { day: day, id: id } })
     } catch (err) {
-
         dispatch({ type: 'ALERT', payload: { err: err.response.data.msg } })
 
     }

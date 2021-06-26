@@ -6,8 +6,11 @@ function Toast(props) {
     return <>
         
         <div className='alert'>
-            <strong>{props.msg} </strong>{props.info}
-            <button onClick={props.handleShow} type="button">&times;</button>
+            <strong> {props.msg} 
+            </strong> {props.info}
+            <button onClick={props.handleShow} 
+                type="button">&times;
+            </button>
         </div>
     </>
 }

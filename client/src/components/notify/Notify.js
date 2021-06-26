@@ -11,7 +11,10 @@ function Notify() {
    }
 
    return (<>
-     {Alert.err && <Toast msg='Error!' info={Alert.err} handleShow={handleShow}/>}
+     {Alert.err && <Toast msg='Error!' 
+         info={Alert.err} 
+         handleShow={handleShow}
+      />}
      
    </>
    )

@@ -1,21 +1,22 @@
 import { capitalize } from '../utils/functions'
 import { useSelector,useDispatch } from 'react-redux'
-import { useState } from 'react'
+import {  useState} from 'react'
 import AddClass from './inputComponents/AddClass'
-import { getClassesByTeacher } from  '../redux/actions/classAction'
 
-function Header({ name, handleNext, handleBack,daysInMonth }) {
+
+function Header({ name, handleNext, handleBack }) {
   name = capitalize(name)
-  const dispatch = useDispatch()
-  const { teachers } = useSelector(state => state)
+  
+  const { teachers,filter } = useSelector(state => state)
   const [showAdd, setShowAdd] = useState(false)
-
-
-  const handleChange = (e) =>{
-     const teacher  = teachers.filter( item => item.teacherName === e.target.value)
+  const dispatch = useDispatch()
+ 
+const handleChange =(e) =>{
      
-     dispatch(getClassesByTeacher(name,teacher[0].teacherId,daysInMonth))
-  }
+  dispatch({type:'changeTeacher',payload:e.target.value})
+}
+   
+  
 
   return <>
     <div className='header'>
@@ -24,27 +25,43 @@ function Header({ name, handleNext, handleBack,daysInMonth }) {
         <h3 style={{ fontSize: '2.3rem', fontWeight: 300 }}>
           {name}, 2021
         </h3>
-        <i onClick={handleNext} class="fas fa-arrow-right fa-2x"></i>
+        <i onClick={handleNext} 
+           class="fas fa-arrow-right fa-2x">
+        </i>
       </div>
       <div className='headerItems'>
         <div style={{ marginLeft: '5px' }}>
-          <select name='teacherName' onChange= {handleChange} className='filter' >
-            <option value= 'none' selected hidden disabled >
-              Select a teacher
-            </option>
-            {teachers.map(teacher => (
-              <option value={teacher.teacherName} key={teacher.teacherId}>{teacher.teacherName}</option>
+          <select name='teacherName' 
+                  value = {filter.selectedTeacher} 
+                  onChange= {handleChange} 
+                  className='filter' >
+              <option value= 'All'  >
+                All
+              </option>
+              {teachers.map(teacher => (
+                <option value={teacher.teacherName} 
+                        key={teacher.teacherId}>
+                        {teacher.teacherName}
+                </option>
             ))
             }
           </select>
         </div>
         <div>
           <select name='teacherName' className='view'>
-            <option value='A'>Month </option>
-            <option value='B' >Week </option> 
+            <option value='A'>
+              Month 
+            </option>
+            <option value='B' >
+              Week 
+            </option> 
           </select>
         </div>
-        <i class="fas fa-plus-circle fa-3x" onClick={() => setShowAdd(true)} style = {{margin:'0 10px'}} ></i>
+        <i class="fas fa-plus-circle fa-3x" 
+            onClick={() => setShowAdd(true)} 
+            style = {{margin:'0 10px'}} >
+
+        </i>
       </div>
       {showAdd ? <AddClass  setShowAdd={setShowAdd} /> : null}
     </div>

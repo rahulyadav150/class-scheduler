@@ -3,15 +3,12 @@ import { useEffect } from 'react'
 import { useSelector,useDispatch } from 'react-redux';
 import Header from './Header'
 import Day from './Day'
-import { classTypes, getClasses } from '../redux/actions/classAction'
+import { classTypes, getClasses ,getClassesByTeacher} from '../redux/actions/classAction'
 import {getMonthNumber,getMonthName} from '../utils/functions'
 
 
 function Monthly(){
-   
-  
-    
-    const {daysArr} = useSelector(state => state)
+    const {daysArr,filter,teachers} = useSelector(state => state)
     const dispatch = useDispatch()
     const location = useHistory()
    
@@ -32,6 +29,7 @@ function Monthly(){
         const nextMonth = getMonthName(n)
         location.push(`/${nextMonth}`)
     }
+    
     const handleNext = () => {
         
         const n = (numericMonth+1)%12
@@ -49,10 +47,16 @@ function Monthly(){
         dispatch({type:classTypes.initialize,payload : Arr})
         
     },[month,dispatch,daysInMonth])
+
    
     useEffect(()=>{
+        if(filter.selectedTeacher!=='All')
+        { const temp  = teachers.filter( item => item.teacherName === filter.selectedTeacher)
+          dispatch(getClassesByTeacher(month,temp[0].teacherId,daysInMonth))
+        }
+        else
         dispatch(getClasses(month))
-    },[month,dispatch])
+      },[filter,month,dispatch])
 
 
 
@@ -71,11 +75,19 @@ return <>
      </div>
      <div className = 'days'>
         {daysArr.map((d,index)=>(
-              index===0 ?
-             <Day firstDay = 'true'  key = {index} day = {index+1} skippedDays={skippedDays}  todayClasses = {d}/> 
-            : <Day  key = {index} day = {index+1} todayClasses = {d}/>
-        ))
-        }
+              index===0 ? <Day firstDay = 'true'  
+                                key = {index} 
+                                day = {index+1} 
+                                skippedDays={skippedDays}  
+                                todayClasses = {d}
+                                
+                            /> 
+                        : <Day  key = {index} 
+                                day = {index+1} 
+                                todayClasses = {d}
+
+                            />
+        ))}
      </div>
      </div>
      </div>

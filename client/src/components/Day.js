@@ -9,14 +9,21 @@ function Day({firstDay,day,skippedDays,todayClasses}){
     
      return <>
      <div className = 'day' style = {{gridColumnStart : firstDay==='true' ? skippedDays : null}}>
-       <h5>
+        <h5>
            {day}
-       </h5> 
-       {todayClasses.length >0 ?  <button onClick = {()=>setShowClasses(true)}>{todayClasses.length } Class scheduled</button> : null }
-       <i class="fas fa-plus-circle fa-2x addIcon" onClick = {() => setShowAdd(true)} ></i>
+        </h5> 
+        {todayClasses.length >0 ?  <button onClick = {()=>setShowClasses(true)}>
+                                          {todayClasses.length } Class scheduled
+                                  </button> 
+                               : null }
+        <i class="fas fa-plus-circle fa-2x addIcon" 
+          onClick = {() => setShowAdd(true)} />
        
-       {showAdd ? <AddClass  day = {day}  setShowAdd = {setShowAdd}/> : null}
-       {showClasses && <ClassContainer day = {day} setShowClasses = {setShowClasses}/>}
+        {showAdd ? <AddClass  day = {day}  
+                    setShowAdd = {setShowAdd}/> 
+                : null}
+        {showClasses && <ClassContainer day = {day} 
+                        setShowClasses = {setShowClasses}/>}
      </div>
      </>
 }
