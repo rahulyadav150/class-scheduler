@@ -1,9 +1,9 @@
 const mysql = require('mysql')
 const connection  = mysql.createConnection({
-    host : 'sql6.freemysqlhosting.net',
-    user : 'sql6421371',
-    password:'RcxsMQxqvc',
-    database:'sql6421371'
+    host : process.env.MYSQL_HOST,
+    user : process.env.MYSQL_USERNAME,
+    password:process.env.MYSQL_PASSWORD,
+    database:process.env.MYSQL_NAME
 })
 
 
