@@ -1,0 +1,30 @@
+
+.calender_container{
+  background-color: #EDFFEC;
+}
+.calendar .weekDays {
+    width: 100%;
+    display: flex;
+    color: #247BA0;
+    
+  }
+
+   .calendar .weekDays div {
+    width: 160px;
+    padding: 10px;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  .calendar .days{
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+  grid-gap: 10px;
+  text-align: center;
+  
+  }
+
+  .calendar .days h5{
+     font-size: 1rem;
+  }

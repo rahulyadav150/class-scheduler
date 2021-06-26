@@ -1,0 +1,29 @@
+.alert{
+    width: 300px;
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    z-index: 50;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem
+}
+.alert button{
+    background-color: transparent;
+    border: 0;
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    cursor:pointer;
+}
+.alert button:hover{
+    opacity: 1;
+}

@@ -1,0 +1,53 @@
+.calendar .days .day {
+  cursor: pointer;
+  box-sizing: border-box;
+  background-color: white;
+  margin: 5px;
+  box-shadow: 0px 0px 3px #CBD4C2;
+  display: flex;
+  flex-direction: column;
+  height: 150px;
+  position: relative;
+  
+  
+}
+.calendar .days .day h5 {
+  margin-top: 10px;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #247BA0;
+}
+.calendar .days .day:hover{
+    background-color: #e8faed
+}
+
+.calendar  .day .addIcon{
+  color: #17a2b8;
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  left:50%;
+  transform: translate(-50%,50%)
+}
+
+.calendar  .day .addIcon:hover{
+  color: #117a8b;
+}
+.calendar  .day button{
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  padding: 0.375rem 0.25rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  color: #fff;
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+}
+.calendar  .day button:hover{
+  color: #fff;
+  background-color: #138496;
+  border-color: #117a8b;
+}
