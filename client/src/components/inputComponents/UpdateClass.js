@@ -8,9 +8,7 @@ import { updateClass } from '../../redux/actions/classAction'
 function UpdateClass({ classInfo,setShowUpdate }) {
     const dispatch = useDispatch()
     const {teachers} = useSelector(state => state)
-    
-    console.log(classInfo)
-    classInfo.day = toDateString({month:classInfo.Month,day:classInfo.day})
+    classInfo.date = toDateString({month:classInfo.month,day:classInfo.day})
     const [inputData, setInputData] = useState(classInfo)
     
     const handleChange = (e) => {
@@ -22,9 +20,10 @@ function UpdateClass({ classInfo,setShowUpdate }) {
     
 
     const handleSubmit = (e) => {
+        
         e.preventDefault()
         setShowUpdate(false)
-        inputData.day = dateStringtoDay(inputData.day)
+        inputData.day = dateStringtoDay(inputData.date)
         
         teachers.map(teacher => {
             if (teacher.teacherName === inputData.teacherName)
@@ -33,6 +32,7 @@ function UpdateClass({ classInfo,setShowUpdate }) {
         })
         
         dispatch(updateClass({inputData}))
+        
     }
 
 
@@ -51,8 +51,8 @@ function UpdateClass({ classInfo,setShowUpdate }) {
                         <option value={teacher.teacherName} index = {teacher.teacherId}>{teacher.teacherName} </option>
                     ))}
                 </select><br />
-                <label htmlFor='day'>Date</label>
-                <input type='text' id='day' name='day' style = {{marginBottom:'0'}} value={inputData.day} onChange={handleChange} placeholder = '23/06/21' required/>
+                <label htmlFor='date'>Date</label>
+                <input type='text' id='date' name='date' style = {{marginBottom:'0'}} value={inputData.date} onChange={handleChange} placeholder = '23/06/21' required/>
                 <span style = {{fontSize:'.7rem',color:'red',display:'block',marginBottom:'15px',marginTop:'2px'}}>DD/MM/YYYY </span>
                 <label htmlFor='starts_at'>Starts at <small>(HH:MM:SS)</small></label>
                 <input type='text' id='starts_at' name='starts_at' value={inputData.starts_at} onChange={handleChange} placeholder = '08:30:00' required />

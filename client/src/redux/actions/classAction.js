@@ -52,11 +52,12 @@ export const getClassesByTeacher = (month, teacherId, daysInMonth) => async disp
 
 export const updateClass = ({ inputData }) => async dispatch => {
     try {
+        
         const res = patchDataAPI(`classes/${inputData.classId}`, inputData)
-        window.location.href = `/${inputData.Month}`
+        window.location.href = `/${inputData.month}`
     } catch (err) {
-
-        dispatch({ type: 'ALERT', payload: { err: err.response.data.msg } })
+        window.location.href = `/${inputData.month}`
+        
 
     }
 }

@@ -16,7 +16,7 @@ function isOverlap(arr, interval) {
     }
     return false
 }
-const validation = async (newClass) => {
+const validation = (newClass) => {
     if (!newClass.teacherName)
         return "Please provide teacher's name"
 
@@ -61,11 +61,11 @@ const classCtrl = {
 
             }
         },
-        createClass: async (req, res) => {
+        createClass: (req, res) => {
             try {
                 let newClass = req.body
-                console.log(newClass)
-                const check = await validation(newClass)
+                
+                const check =  validation(newClass)
                 const intervel = {
                     starts_at: newClass.starts_at,
                     ends_at: newClass.ends_at
@@ -93,7 +93,7 @@ const classCtrl = {
                                 msg: err
                             })
                         newClass.classId = rows.insertId
-                        console.log(newClass)
+                        
                         return res.status(201).send({
                             class: newClass
                         })
@@ -111,39 +111,39 @@ const classCtrl = {
         updateClass: async (req, res) => {
             try{
             let newClass = req.body
-            console.log(newClass)
-            const check = await validation(newClass)
+            
+            const check =  validation(newClass)
             const intervel = {
                 starts_at: newClass.starts_at,
                 ends_at: newClass.ends_at
             }
             let arr;
-            if (check) return res.status(400).json({
-                msg: check
-            })
-            const statement = `SELECT starts_at,ends_at from classes where month = '${newClass.Month}' and day = ${newClass.day} and teacherId = ${newClass.teacherId} and classId != ${newClass.classId} `
+            if (check){
+            return res.status(400).json({msg: check})
+        }
+            const statement = `SELECT starts_at,ends_at from classes where month = '${newClass.month}' and day = ${newClass.day} and teacherId = ${newClass.teacherId} and classId != ${newClass.classId} `
             db.query(statement, (err, rows, fields) => {
-                if (err)
-                    return res.status(500).json({
-                        msg: err.message
-                    })
-                arr = rows
-                console.log(arr)
-                if (isOverlap(arr, intervel))
+                if (err){
+                    
+                     return res.status(500).json({msg: err.message})
+                }
+               arr = rows
+                if (isOverlap(arr, intervel)){
                     return res.status(400).json({
                         msg: 'This teacher is already scheduled at this time slot ,please choose another.'
                     })
+                }
                 const statement1 = `UPDATE classes SET topic = '${newClass.topic}', day = ${newClass.day},starts_at = '${newClass.starts_at}',ends_at ='${newClass.ends_at}',teacherName = '${newClass.teacherName}', teacherId = ${newClass.teacherId} where classId = ${newClass.classId}`
-                db.query(statement1, (err, rows, field) => {
+                db.query(statement1, (err, result, field) => {
                     if (err)
-                        return res.status(400).send({
+                        return res.status(400).json({
                             msg: err
                         })
                     
-                    console.log(rows)
-                    return res.status(204).send({
+                   
+                    return res.status(204).json({
                         msg:'updated Succesfully',
-                        class : rows
+                        class : result
                     })
 
                 })

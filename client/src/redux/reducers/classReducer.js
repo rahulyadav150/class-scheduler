@@ -14,11 +14,19 @@ const classReducer = (state=initialState, action)=>{
             state[action.payload.day-1].push(action.payload)
             return [...state]
         case classTypes.deleteClass:
-              let arr = state.splice(action.payload.day-1,1)
+              var arr = state.splice(action.payload.day-1,1)
               console.log(arr)
-              const filtered = arr.filter(item => item.classId!==action.payloadId)
+              var filtered = arr.filter(item => item.classId!==action.payloadId)
               state.splice(action.payload.day-1,0,filtered)
               return [...state]
+        case classTypes.updateClass:
+            var arr = state.splice(action.payload.day-1,1)
+            
+            var filtered = arr.filter(item => item.classId!==action.payload.classId)
+            state.splice(action.payload.day-1,0,filtered)
+            state[action.payload.day-1].push(action.payload)
+                return [...state]
+        
         default: 
         return state
     }
