@@ -160,8 +160,8 @@ const classCtrl = {
     deleteClass: async (req, res) => {
             try {
 
-                const {id} = req.query
-                db.query(`delete from classes where classId = ${id}`, (err, rows, field) => {
+                const {classId} = req.query
+                db.query(`delete from classes where classId = ${classId}`, (err, rows, field) => {
                     if (err)
                         return res.status(400).send({
                             msg: err

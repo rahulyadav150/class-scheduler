@@ -64,7 +64,7 @@ export const updateClass = ({ inputData }) => async dispatch => {
 
 export const deleteClass = ({ day, id }) => async dispatch => {
     try {
-        const res = deleteDataAPI(`classes?classId='${id}`)
+        const res = deleteDataAPI(`classes?classId=${id}`)
 
         dispatch({ type: classTypes.deleteClass, payload: { day: day, id: id } })
     } catch (err) {
