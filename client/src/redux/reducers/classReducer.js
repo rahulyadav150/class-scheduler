@@ -18,7 +18,8 @@ const classReducer = (state=initialState, action)=>{
 
         case classTypes.deleteClass:
               var arr = state.splice(action.payload.day-1,1)
-              var filtered = arr.filter(item => item.classId!==action.payloadId)
+              var  classes = arr[0]
+              var filtered = classes.filter(item => item.classId!==action.payload.id)
               state.splice(action.payload.day-1,0,filtered)
               return [...state]
 
