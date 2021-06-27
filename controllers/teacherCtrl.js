@@ -26,7 +26,7 @@ const teacherCtrl = {
             if(err)
             return  res.status(400).send({error:err})
             newTeacher.teacherId = rows.insertId
-            return res.status(200).send({newteacher:newTeacher})
+            return res.status(201).send({newteacher:newTeacher})
            })
            
            }catch(err){
