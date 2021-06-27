@@ -1,4 +1,4 @@
-import { getDataAPI } from "../../utils/fetchdata"
+import { getDataAPI,postDataAPI } from "../../utils/fetchdata"
 
 export const teacherTypes = {
     getTeachers : 'GET_TEACHERS',
@@ -14,6 +14,13 @@ export const getTeachers = () => async  dispatch => {
     }
 } 
 
-export const AddTeacher  = () => dispatch => {
-   
+export const addTeacher  =  (teacherName) =>  async dispatch => {
+    try {
+        const newteacher = {teacherName:teacherName}
+        const res = await postDataAPI('teachers',newteacher)
+        console.log(res.data)
+          dispatch({type:teacherTypes.addTeacher,payload : res.data.newteacher})
+     } catch (error) {
+         
+     }
 }

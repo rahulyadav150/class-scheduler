@@ -64,4 +64,25 @@
 .fas.fa-plus-circle:hover{
     color: #117a8b;
 }
+
+.teacherBtn {cursor: pointer;
+    display: block;
+    font-weight: 400;
+    text-align: center;
+    width: 150px;
+    padding: 0.375rem 0.25rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    background-color: #01937C;
+    border-color: #01937C;
+    margin:5px;
+    }
+    .teacherBtn:hover{
+        background-color: #66DE93;
+    border-color: #66DE93;
+    }
+
+
+
    

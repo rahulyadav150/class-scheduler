@@ -14,10 +14,10 @@ app.use('/api',require('./routes/classRouter'));
 app.use('/api',require('./routes/teacherRouter'));
 const Port =  process.env.PORT || 5000 
 
-app.use(express.static(path.join(__dirname, "client", "build")))
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-})
+// app.use(express.static(path.join(__dirname, "client", "build")))
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+// })
 
 
 

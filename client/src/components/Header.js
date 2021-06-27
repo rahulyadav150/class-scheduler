@@ -2,13 +2,14 @@ import { capitalize } from '../utils/functions'
 import { useSelector,useDispatch } from 'react-redux'
 import {  useState} from 'react'
 import AddClass from './inputComponents/AddClass'
-
+import AddTeacher from './inputComponents/AddTeacher'
 
 function Header({ name, handleNext, handleBack }) {
   name = capitalize(name)
   
   const { teachers,filter } = useSelector(state => state)
   const [showAdd, setShowAdd] = useState(false)
+  const [showAddTeacher,setShowAddTeacher]  = useState(false)
   const dispatch = useDispatch()
  
 const handleChange =(e) =>{
@@ -35,7 +36,7 @@ const handleChange =(e) =>{
                   value = {filter.selectedTeacher} 
                   onChange= {handleChange} 
                   className='filter' >
-              <option value= 'All'  >
+              <option  key = 'all' value= 'All'  >
                 All
               </option>
               {teachers.map(teacher => (
@@ -47,16 +48,9 @@ const handleChange =(e) =>{
             }
           </select>
         </div>
-        <div>
-          <select name='teacherName' className='view'>
-            <option value='A'>
-              Month 
-            </option>
-            <option value='B' >
-              Week 
-            </option> 
-          </select>
-        </div>
+        <button className = 'teacherBtn'onClick = {()=>setShowAddTeacher(true)} >
+           ADD Teacher
+        </button>
         <i class="fas fa-plus-circle fa-3x" 
             onClick={() => setShowAdd(true)} 
             style = {{margin:'0 10px'}} >
@@ -64,6 +58,7 @@ const handleChange =(e) =>{
         </i>
       </div>
       {showAdd ? <AddClass  setShowAdd={setShowAdd} /> : null}
+      {showAddTeacher ? <AddTeacher  setShowAddTeacher={setShowAddTeacher} /> : null}
     </div>
 
   </>

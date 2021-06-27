@@ -55,7 +55,14 @@ function Monthly(){
           dispatch(getClassesByTeacher(month,temp[0].teacherId,daysInMonth))
         }
         else
+        {
+        
+        let Arr = []
+        for(let i=0;i<daysInMonth;i++)
+        Arr.push([])
+        dispatch({type:classTypes.initialize,payload : Arr})
         dispatch(getClasses(month))
+        }
       },[filter,month,dispatch])
 
 

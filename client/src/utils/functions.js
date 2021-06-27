@@ -17,7 +17,7 @@ export const toDateString = ({month,day}) => {
     return dateString
 }
 
-export const dateStringtoDay = (dateString) => {
+export const dateStringtoDay = (dateString) => {    // DD/MM/YYYY -> DD 
    
     const parts= dateString.split('/')
     const n = parseInt(parts[0],10)

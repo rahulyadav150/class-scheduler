@@ -38,6 +38,10 @@ body {
 @import url('./addClass.css');
 
 
+/*-------------- ADD Teacher------------- */
+@import url('./addTeacher.css');
+
+
 
 /*-------------- Notify ------------- */
 @import url('./notify.css');

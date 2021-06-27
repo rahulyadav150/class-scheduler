@@ -10,9 +10,9 @@ function AddClass({ day,setShowAdd }) {
     const { month } = useParams()
    
     
-   
-    if (day) day = toDateString({ month, day })
-    const obj = {topic:'',teacherName:'',teacherId:'',month:'',day:day,starts_at:'',ends_at:''}
+    let date;
+    if (day) date = toDateString({ month, day })
+    const obj = {topic:'',teacherId:'',date:date,starts_at:'',ends_at:''}
     const [inputData, setInputData] = useState(obj)
     
     const handleChange = (e) => {
@@ -26,17 +26,7 @@ function AddClass({ day,setShowAdd }) {
     const handleSubmit = (e) => {
         e.preventDefault()
         setShowAdd(false)
-        inputData.day = dateStringtoDay(inputData.day)
-        inputData.month = month
-        teachers.map(teacher => {
-            if (teacher.teacherName === inputData.teacherName)
-            return inputData.teacherId =  teacher.teacherId
-            return inputData
-        })
-        
         dispatch(createClass({inputData}))
-        
-
     }
 
 
@@ -54,15 +44,15 @@ function AddClass({ day,setShowAdd }) {
                 <br />
 
                 <label htmlFor='teacher'>Teacher's name</label>
-                <select name='teacherName' 
-                  value={inputData.teacher} 
+                <select name='teacherId' 
+                  
                   id='teacher' 
                   onChange={handleChange} >
                     <option value ='none' selected hidden disabled >
                     Select an Option
                     </option>
                     {teachers.map((teacher) => (
-                        <option value={teacher.teacherName} 
+                        <option value={teacher.teacherId} 
                             index = {teacher.teacherId}> 
                             {teacher.teacherName} 
                         </option>
@@ -70,14 +60,14 @@ function AddClass({ day,setShowAdd }) {
                 </select>
                 <br />
 
-                <label htmlFor='day'>Date</label>
+                <label htmlFor='date'>Date</label>
                 <input type='text' 
-                  id='day' 
-                  name='day' 
+                  id='date' 
+                  name='date' 
                   style = {{marginBottom:'0'}} 
-                  value={inputData.day} 
+                  value={inputData.date} 
                   onChange={handleChange} 
-                  placeholder = '23/06/21' required />
+                  placeholder = '23/06/2021' required />
                 <span style = {{fontSize:'.7rem',
                                 color:'red',
                                 display:'block',
@@ -106,11 +96,13 @@ function AddClass({ day,setShowAdd }) {
                 <div style = {{display:'flex',
                                justifyContent:'center'}} >
                 <button className = 'canclebtn' 
-                        onClick = {()=>setShowAdd(false)} > Cancel </button>
+                        onClick = {()=>setShowAdd(false)} > Cancel 
+                </button>
                 
                 
                 <button type='submit' 
-                    className ='addbtn'>ADD</button>
+                        className ='addbtn'>ADD
+                </button>
                 </div>
 
             </form>

@@ -8,8 +8,8 @@ import { updateClass } from '../../redux/actions/classAction'
 function UpdateClass({ classInfo,setShowUpdate }) {
     const dispatch = useDispatch()
     const {teachers} = useSelector(state => state)
-    classInfo.date = toDateString({month:classInfo.month,day:classInfo.day})
-    classInfo.preDay = classInfo.day
+    
+    classInfo.preDay = dateStringtoDay(classInfo.date)
     const [inputData, setInputData] = useState(classInfo)
     
     const handleChange = (e) => {
@@ -23,14 +23,6 @@ function UpdateClass({ classInfo,setShowUpdate }) {
     const handleSubmit = (e) => {
         e.preventDefault()
         setShowUpdate(false)
-        inputData.day = dateStringtoDay(inputData.date)
-        
-        teachers.map(teacher => {
-            if (teacher.teacherName === inputData.teacherName)
-            return inputData.teacherId =  teacher.teacherId
-            return inputData
-        })
-        
         dispatch(updateClass({inputData}))
     }
 
@@ -49,20 +41,20 @@ function UpdateClass({ classInfo,setShowUpdate }) {
                 <br />
 
                 <label htmlFor='teacher'>Teacher's name</label>
-                <select name='teacherName' 
-                  value={inputData.teacherName} 
+                <select name='teacherId' 
+                  value={inputData.teacherId} 
                   id='teacher' 
                   onChange={handleChange} >
                     
                     {teachers.map((teacher) => (
-                        <option value={teacher.teacherName} index = {teacher.teacherId}>{teacher.teacherName} </option>
+                        <option value={teacher.teacherId} index = {teacher.teacherId}>{teacher.teacherName} </option>
                     ))}
                 </select>
                 <br />
 
                 <label htmlFor='date'>Date</label>
                 <input type='text' 
-                  id='date' 
+                  
                   name='date' 
                   style = {{marginBottom:'0'}} 
                   value={inputData.date} 

@@ -14,7 +14,7 @@ export const classTypes = {
 }
 
 
-export const getClasses = (month, daysArr) => async dispatch => {
+export const getClasses = (month) => async dispatch => {
     try {
         const res = await getDataAPI(`classes?month=${month}`)
         dispatch({ type: classTypes.getClasses, payload: res.data.classes })
@@ -24,7 +24,7 @@ export const getClasses = (month, daysArr) => async dispatch => {
 }
 
 export const createClass = ({ inputData }) => async dispatch => {
-    try {
+    try {  
         const res = await postDataAPI(`classes`, inputData)
         dispatch({ type: classTypes.createClass, payload: res.data.class })
     } catch (err) {

@@ -16,8 +16,7 @@ const isOverlap =  (arr, interval) => {
     return false
 }
 const validation = (newClass) => {
-    if (!newClass.teacherName)
-        return "Please provide teacher's name"
+    
 
     if (!newClass.teacherId)
         return "Please select teacher's name"

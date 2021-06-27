@@ -5,8 +5,9 @@ const utilFunctions = require('../utils/utilityFunctions')
 const classCtrl = {
         getClasses: async (req, res) => {
             try {
+                
                 const {month} = req.query
-                db.query(`SELECT * FROM classes WHERE month ='${month}'`, (err, rows, field) => {
+                db.query(`SELECT *,DATE_FORMAT(Date,'%d/%m/%Y') as date FROM classes WHERE DATE_FORMAT(Date,'%M') = '${month}'`, (err, rows, field) => {
                     if (err)
                         return res.status(400).send({
                             msg: err
@@ -27,22 +28,22 @@ const classCtrl = {
         createClass: (req, res) => {
             try {
                 let newClass = req.body
-                
+               
                 const check =  utilFunctions.validation(newClass)
                 const intervel = {starts_at: newClass.starts_at,ends_at: newClass.ends_at}
                 let arr;
                 if (check) return res.status(400).json({msg: check})
 
-                const statement = `SELECT starts_at,ends_at from classes where month = '${newClass.month}' and day = ${newClass.day} and teacherId = ${newClass.teacherId} `
+                const statement = `SELECT starts_at,ends_at from classes where DATE_FORMAT(Date,'%d/%m/%Y') = '${newClass.date}' and teacherId = ${newClass.teacherId} `
                 db.query(statement, (err, rows, fields) => {
                     if (err) return res.status(500).json({msg: err.message})
-
+                    
                     arr = rows
                     if (utilFunctions.isOverlap(arr, intervel))
                         return res.status(400).json({
                             msg: 'This teacher is already scheduled at this time slot ,please choose another.'
                         })
-                    const statement1 = `INSERT INTO classes (topic,teacherName,teacherId,month,day,starts_at,ends_at) values('${newClass.topic}','${newClass.teacherName}','${newClass.teacherId}','${newClass.month}','${newClass.day}','${newClass.starts_at}','${newClass.ends_at}')`
+                    const statement1 = `INSERT INTO classes (topic,teacherId,Date,starts_at,ends_at) values('${newClass.topic}','${newClass.teacherId}',STR_TO_DATE('${newClass.date}','%d/%m/%Y'),'${newClass.starts_at}','${newClass.ends_at}')`
                     db.query(statement1, (err, rows, field) => {
                         if (err)
                             return res.status(400).send({
@@ -67,13 +68,14 @@ const classCtrl = {
         updateClass: async (req, res) => {
             try{
                 let newClass = req.body
+                console.log("upadetclass",newClass)
                 const check =  utilFunctions.validation(newClass)
                 const intervel = {starts_at: newClass.starts_at,ends_at: newClass.ends_at}
                 let arr;
                 if (check){
                 return res.status(400).json({msg: check})}
             
-                const statement = `SELECT starts_at,ends_at from classes where month = '${newClass.month}' and day = ${newClass.day} and teacherId = ${newClass.teacherId} and classId != ${newClass.classId} `
+                const statement = `SELECT starts_at,ends_at from classes where DATE_FORMAT(Date,'%d/%m/%Y') = '${newClass.date}' and teacherId = ${newClass.teacherId}  and classId != ${newClass.classId} `
                 db.query(statement, (err, rows, fields) => {
                 if (err){
                     return res.status(500).json({msg: err.message})
@@ -86,7 +88,7 @@ const classCtrl = {
                     })
                 }
 
-                const statement1 = `UPDATE classes SET topic = '${newClass.topic}', day = ${newClass.day},starts_at = '${newClass.starts_at}',ends_at ='${newClass.ends_at}',teacherName = '${newClass.teacherName}', teacherId = ${newClass.teacherId} where classId = ${newClass.classId}`
+                const statement1 = `UPDATE classes SET topic = '${newClass.topic}', Date = STR_TO_DATE('${newClass.date}','%d/%m/%Y'),starts_at = '${newClass.starts_at}',ends_at ='${newClass.ends_at}', teacherId = ${newClass.teacherId} where classId = ${newClass.classId}`
                 db.query(statement1, (err, result, field) => {
                     if (err)
                         return res.status(400).json({
@@ -135,7 +137,7 @@ const classCtrl = {
 
                 const {month, teacherId} = req.query
                 
-                db.query(`SELECT * FROM classes WHERE month ='${month}' and teacherId = ${teacherId}`, (err, rows, field) => {
+                db.query(`SELECT *,DATE_FORMAT(Date,'%d/%m/%Y') as date FROM classes  WHERE DATE_FORMAT(Date,'%M') = '${month}' and teacherId = ${teacherId}`, (err, rows, field) => {
                     if (err)
                         return res.status(400).send({
                             msg: err

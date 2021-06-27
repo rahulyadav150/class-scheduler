@@ -1,4 +1,5 @@
 
+import { dateStringtoDay } from '../../utils/functions'
 import {classTypes} from '../actions/classAction'
 
 const initialState = []
@@ -8,12 +9,13 @@ const classReducer = (state=initialState, action)=>{
             return [...action.payload]
         case classTypes.getClasses:
             action.payload.map(item => {
-                 return state[item.day-1].push(item)
+                 state[dateStringtoDay(item.date)-1].push(item)
             })
+           
             return [...state]
 
         case classTypes.createClass:
-            state[action.payload.day-1].push(action.payload)
+            state[dateStringtoDay(action.payload.date)-1].push(action.payload)
             return [...state]
 
         case classTypes.deleteClass:
@@ -24,13 +26,11 @@ const classReducer = (state=initialState, action)=>{
               return [...state]
 
         case classTypes.updateClass:
-            var arr = state.splice(action.payload.preDay-1,1)
-            var classes = arr[0]
-            classes.map((item,index)=>{
-                if(item.classId===action.payload.classId)
-                classes[index]=action.payload
-            })
-             state.splice(action.payload.day-1,0,classes)
+             var arr = state.splice(action.payload.preDay-1,1)
+             var classes = arr[0]
+             var remainClasses = classes.filter((item)=> item.classId!==action.payload.classId)
+             state.splice(action.payload.preDay-1,0,remainClasses)
+             state[dateStringtoDay(action.payload.date)-1].push(action.payload)
             
             return [...state]
                 
